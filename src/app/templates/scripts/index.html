@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block page %}{{title}}{% endblock %}
+{% block heading %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
+    <h5>Zabbix</h5>
+    <ul>
+      {% for item in items %}
+        <li>
+          <a href="{{ url_for('scripts_zabbix', name=item) }}">{{ item | replace('_', ' ') | title }}</a>
+        </li>
+      {% endfor%}
+    </ul>
+{% endblock %}

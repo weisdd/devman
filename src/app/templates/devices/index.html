@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block page %}{{ title }}{% endblock %}
+{% block heading %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <!-- tablesorter -->
+    <script>
+        $.tablesorter.addParser({
+            id: "ipAddress2",
+            is: function (s) {
+                return /^\d{1,3}[\.]\d{1,3}[\.]\d{1,3}[\.]\d{1,3}$/.test(s);
+            },
+            format: function (s) {
+                var octs = s.split('.');
+                var sum = 0;
+                for (i in octs) {
+                    sum += octs[i] * Math.pow(256, (octs.length - 1) - i);
+                }
+                return sum;
+            },
+            type: "numeric"
+        });
+
+        $(function () {
+            $("table#SortTable").tablesorter(
+                {
+                    headers: {
+                        0: {
+                            sorter: 'ipAddress2'
+                        },
+                        4: {
+                            sorter: false
+                        }
+                    },
+                    sortList: [[0, 0]]
+
+                }
+            );
+        });
+    </script>
+    <!-- tablesorter -->
+    <table class="table table-striped table-hover tablesorter-bootstrap" id="SortTable">
+        <thead>
+        <tr>
+            <th class="header">
+                IP
+            </th>
+            <th class="header">
+                Location
+            </th>
+            <th class="header">
+                Model
+            </th>
+            <th class="header">
+                S/N
+            </th>
+            <th class="header">
+                Links
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for device in devices %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('devices_ip', ip=device.ip) }}">{{ device.ip }}</a>
+                </td>
+                <td>
+                    <a href="{{ url_for('devices_site', site=device.site_slug) }}">
+                        {% if device.tenant_name %}
+                            {{ device.tenant_name }}
+                        {% else %}
+                            {{ device.site_name }}
+                        {% endif %}
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ url_for('devices_model', model=device.model_slug) }}">
+                        {{ device.device_type }}
+                    </a>
+                </td>
+                <td>
+                    {{ device.serial }}
+                </td>
+                <td>
+                    <a href="{{ config['NETBOX_URL'] }}/dcim/devices/{{ device.id }}/" target="_blank">
+                        <img src="/static/assets/ico/netbox_black.ico"
+                             style="width:auto; height:1em;"/>
+                    </a>
+                    <a href="{{ url_for('go_cacti', ip=device.ip) }}" target="_blank">
+                        <img src="/static/assets/ico/cacti_black.ico"
+                             style="width:auto; height:1em;"/>
+                    </a>
+                    <a href="{{ url_for('go_zabbix', ip=device.ip) }}" target="_blank">
+                        <img src="/static/assets/ico/zabbix_black.ico"
+                             style="width:auto; height:1em;"/>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

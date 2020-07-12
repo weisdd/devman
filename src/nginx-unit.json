@@ -1,0 +1,14 @@
+{
+  "listeners": {
+    "*:8000": {
+      "pass": "applications/flask_app"
+    }
+  },
+  "applications": {
+    "flask_app": {
+      "type": "python 3",
+      "path": "/devman",
+      "module": "wsgi"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+main > .container {
+    padding: 60px 15px 0;
+}
+
+.footer {
+    background-color: #f5f5f5;
+}
+
+.footer > .container {
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+code {
+    font-size: 80%;
+}
+
+legend {
+    margin-bottom: 20px;
+    /*line-height: 40px;*/
+    /*color: #333333;*/
+    /*border: 0;*/
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.navbar {
+    padding: 0.3rem 0.3rem;
+}
+
+/* Remove top border for all tables */
+.table th {
+    border-top: none !important;
+}
+
+/* tablesorter */
+.tablesorter-bootstrap thead .tablesorter-header {
+	background-position: right 5px center;
+	background-repeat: no-repeat;
+	cursor: pointer;
+	white-space: normal;
+}
+
+.tablesorter-bootstrap thead .sorter-false {
+	cursor: default;
+	background-image: none;
+}
+
+.tablesorter-bootstrap .tablesorter-header-inner {
+	position: relative;
+	padding: 4px 18px 4px 4px;
+}
+.tablesorter-bootstrap .sorter-false .tablesorter-header-inner {
+	padding: 4px;
+}
+/* black icons */
+.tablesorter-bootstrap thead .tablesorter-headerUnSorted:not(.sorter-false) {
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxNiIgdmlld0JveD0iMCAwIDE0IDIwIj48cGF0aCBkPSJNMTQgMTNsLTIuNS0yLjVMNyAxNWwtNC41LTQuNUwwIDEzbDcgN3pNMTQgNy41TDExLjUgMTAgNyA1LjUgMi41IDEwIDAgNy41bDctN3oiLz48L3N2Zz4=);
+}
+.tablesorter-bootstrap thead .tablesorter-headerAsc {
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE0IDE0Ij48cGF0aCBkPSJNMTQgOS41TDExLjUgMTIgNyA3LjUgMi41IDEyIDAgOS41bDctN3oiLz48L3N2Zz4=);
+}
+.tablesorter-bootstrap thead .tablesorter-headerDesc {
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMiIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE0IDE0Ij48cGF0aCBkPSJNMTQgNWwtMi41LTIuNS00LjUgNC41LTQuNS00LjVMMCA1IDcgMTJ6Ii8+PC9zdmc+);
+}
+
+/* table .blue {
+    color: #049cdb;
+    border-bottom-color: #049cdb;
+} */
+
+/*table .tablesorter-headerAsc.blue, table .tablesorter-headerDesc.blue {*/
+/*    background-color: #ade6fe;*/
+/*}*/
+
+
+/* table .green {
+    color: #46a546;
+    border-bottom-color: #46a546;
+} */
+
+/*table .tablesorter-headerAsc.green, table .tablesorter-headerDesc.green {*/
+/*    background-color: #cdeacd;*/
+/*}*/
+
+/* table .red {
+    color: #9d261d;
+    border-bottom-color: #9d261d;
+} */
+
+/*table .tablesorter-headerAsc.red, table .tablesorter-headerDesc.red {*/
+/*    background-color: #f4c8c5;*/
+/*}*/
+
+/* table .yellow {
+    color: #ffc40d;
+    border-bottom-color: #ffc40d;
+} */
+
+/*table .tablesorter-headerAsc.yellow, table .tablesorter-headerDesc.yellow {*/
+/*    background-color: #fff6d9;*/
+/*}*/
+
+/* table .orange {
+    color: #f89406;
+    border-bottom-color: #f89406;
+} */
+
+/*table .tablesorter-headerAsc.orange, table .tablesorter-headerDesc.orange {*/
+/*    background-color: #fee9cc;*/
+/*}*/
+
+/* table .purple {
+    color: #7a43b6;
+    border-bottom-color: #7a43b6;
+} */
+
+/*table .tablesorter-headerAsc.purple, table .tablesorter-headerDesc.purple {*/
+/*    background-color: #e2d5f0;*/
+/*}*/
+
+/* d5d6f0 */
+.table tbody tr.portabove1g td {
+    background-color: #d5e3f0;
+}
+
+.table tbody tr.port1000mbps td {
+    background-color: #e2d5f0;
+}
+
+.table tbody tr.port100mbps td {
+    background-color: #DFF0D8;
+}
+
+.table tbody tr.port10mbps td {
+    background-color: #FCF8E3;
+}
+
+.table tbody tr.portDisabled td {
+    background-color: #EEEEEE;
+}
+
+.table tbody tr.portUnconnected td {
+    background-color: #F2DEDE;
+}

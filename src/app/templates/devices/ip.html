@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block page %}{{ title }}{% endblock %}
+{% block heading %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th class="header">
+                Port
+            </th>
+            <th class="header">
+                Description
+            </th>
+            <th class="header">
+                Adm / Line
+            </th>
+            <th class="header">
+                VLAN's
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for port in snmp|natsort %}
+            {% if snmp[port].port_status_admin == 'up' and snmp[port].port_status_phys == 'up' %}
+                {% set badge = 'badge-success' %}
+                {% if snmp[port].port_speed == '1.0 Gbps' %}
+                    {% set trclass = 'port1000mbps' %}
+                {% elif 'Gbps' in snmp[port].port_speed %}
+                    {% set trclass = 'portabove1g' %}
+                {% elif snmp[port].port_speed == '100 Mbps' %}
+                    {% set trclass = 'port100mbps' %}
+                {% else %}
+                    {% set trclass = 'port10mbps' %}
+                {% endif %}
+            {% elif snmp[port].port_status_admin == 'up' and snmp[port].port_status_phys == 'down' %}
+                {% set badge = 'badge-danger' %}
+                {% set trclass = 'portUnconnected' %}
+            {% else %}
+                {% set badge = 'badge-secondary' %}
+                {% set trclass = 'portDisabled' %}
+            {% endif %}
+            <tr class="{{ trclass }}">
+                <td><b>{{ snmp[port].port_sys_name }}</b></td>
+                <td>{{ snmp[port].port_desc }}</td>
+                <td>
+                    <span class="badge {{ badge }}">{{ snmp[port].port_status_admin }} / {{ snmp[port].port_status_phys }}</span>
+                </td>
+                <td>
+                    VLANs: {{ snmp[port].vlan_num }}<br/>
+                    PVID: {{ snmp[port].pvid }}<br/>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+{% endblock %}

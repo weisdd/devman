@@ -1,0 +1,5 @@
+flask==1.1.2
+natsort==7.0.1
+pymysql==0.9.3
+pynetbox==5.0.3
+pyzabbix==0.8.2

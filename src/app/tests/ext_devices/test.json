@@ -1,0 +1,90 @@
+{
+  "FastEthernet0/1": {
+    "iid": "10001",
+    "port_desc": "FGPlex Reserved",
+    "port_speed": "10 Mbps",
+    "port_status_admin": "down",
+    "port_status_phys": "down",
+    "port_sys_name": "FastEthernet0/1",
+    "port_type": "ethernetCsmacd",
+    "pvid": "8",
+    "vlan_num": "8"
+  },
+  "FastEthernet0/2": {
+    "iid": "10002",
+    "port_desc": "",
+    "port_speed": "10 Mbps",
+    "port_status_admin": "up",
+    "port_status_phys": "down",
+    "port_sys_name": "FastEthernet0/2",
+    "port_type": "ethernetCsmacd",
+    "pvid": "1",
+    "vlan_num": "1"
+  },
+  "FastEthernet0/3": {
+    "iid": "10003",
+    "port_desc": "VoIPGate Stachek[10.7.0.48]",
+    "port_speed": "10 Mbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "FastEthernet0/3",
+    "port_type": "ethernetCsmacd",
+    "pvid": "7",
+    "vlan_num": "7"
+  },
+  "FastEthernet0/4": {
+    "iid": "10004",
+    "port_desc": "CIPPhone #35 S3-27.1 [10.10.0.35]",
+    "port_speed": "100 Mbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "FastEthernet0/4",
+    "port_type": "ethernetCsmacd",
+    "pvid": "1",
+    "vlan_num": "998"
+  },
+  "fo5/0/9": {
+    "iid": "10017",
+    "port_desc": "CIPPhone #25 S2-45.1[10.10.0.25]",
+    "port_speed": "40 Gbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "FortyGigabitEthernet5/0/9",
+    "port_type": "ethernetCsmacd",
+    "pvid": "1",
+    "vlan_num": "998"
+  },
+  "GigabitEthernet0/1": {
+    "iid": "10101",
+    "port_desc": "Z99_C3650_24",
+    "port_speed": "1.0 Gbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "GigabitEthernet0/1",
+    "port_type": "ethernetCsmacd",
+    "pvid": "1",
+    "vlan_num": "6, 7, 8, 15, 18, 998"
+  },
+  "Te0/1": {
+    "iid": "10038",
+    "port_desc": "VoIPGate Antonenko [10.7.0.46]",
+    "port_speed": "10 Gbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "TenGigabitEthernet0/1",
+    "port_type": "ethernetCsmacd",
+    "pvid": "7",
+    "vlan_num": "7, 7"
+  },
+  "twe5/0/1": {
+    "iid": "10017",
+    "port_desc": "CIPPhone #25 S2-45.1[10.10.0.25]",
+    "port_speed": "25 Gbps",
+    "port_status_admin": "up",
+    "port_status_phys": "up",
+    "port_sys_name": "TwentyfiveGigabitEthernet5/0/1",
+    "port_type": "ethernetCsmacd",
+    "pvid": "1",
+    "vlan_num": "998"
+  }
+}

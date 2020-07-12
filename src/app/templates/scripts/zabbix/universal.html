@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block page %}{{ title }}{% endblock %}
+{% block heading %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            {% for field in items.fields.values() %}
+            <th scope="col">{{ field }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+            {% for item in items['items'] %}
+            <tr>
+                <th scope="row">{{ loop.index }}</th>
+                {% for field in items.fields %}
+                <td>
+                    {% if item[field] is number %}
+                        {% if item[field] > 0 %}
+                            <p class="text-center">
+                                <span class="badge badge-warning">&nbsp;&nbsp;{{ item[field] }}&nbsp;&nbsp;</span>
+                            </p>
+                        {% else %}
+                            <p class="text-center">
+                                <span class="badge badge-secondary">&nbsp;&nbsp;{{ item[field] }}&nbsp;&nbsp;</span>
+                            </p>
+                        {% endif %}
+                    {% elif item[field] is iterable and item[field] is not string %}
+                        {% for seq in item[field] %}
+                        <li>{{ seq }}</li>
+                        {% endfor %}
+                    {% else %}
+                        {{ item[field] }}
+                    {% endif %}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% if items.description %}
+<div class="alert alert-secondary" role="alert">
+    {{ items.description }}
+</div>
+{% endif %}
+{% endblock %}
