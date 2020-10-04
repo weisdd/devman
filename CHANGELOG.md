@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.18
+
+* Moved to python-decouple.
+
 ## 0.1.17
 
 * Added Makefile;

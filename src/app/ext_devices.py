@@ -2,11 +2,12 @@ import json
 import os
 import subprocess
 from ipaddress import ip_address
+from decouple import config as dconfig
 
 
 def get_snmp_data(ip):
     snmp_data = {}
-    test_mode = os.getenv("DEVMAN_TEST_MODE", False)
+    test_mode = dconfig("DEVMAN_TEST_MODE", default=False, cast=bool)
 
     if check_ip(ip):
         path = os.path.abspath(os.path.dirname(__file__))
