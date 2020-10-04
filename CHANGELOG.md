@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## 1.1.7
+## 0.1.17
 
 * Added Makefile;
 * Updated dependencies:

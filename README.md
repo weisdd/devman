@@ -14,6 +14,6 @@ The project has never aimed to be something widely deployed, and was developed w
 
 All the changes mentioned above are yet to come true.
 
-## Docker Hub
+## Docker Image
 
-<https://hub.docker.com/repository/docker/weisdd/devman>
+<https://quay.io/repository/weisdd/devman?tab=tags>
