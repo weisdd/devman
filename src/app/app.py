@@ -1,5 +1,6 @@
 import os
 import sys
+from decouple import config as dconfig
 from flask import Flask, abort, redirect, render_template, url_for
 from natsort import natsorted
 
@@ -10,8 +11,9 @@ import ext_netbox  # noqa
 import ext_zabbix  # noqa
 
 app = Flask(__name__)
-app.config.from_object(os.environ["APP_SETTINGS"])
-print(os.environ["APP_SETTINGS"])
+app_settings = dconfig("APP_SETTINGS", default="config.ProductionConfig")
+app.config.from_object(app_settings)
+print(app_settings)
 
 
 @app.template_filter("natsort")
