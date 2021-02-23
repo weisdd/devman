@@ -88,15 +88,15 @@
                     {{ device.serial }}
                 </td>
                 <td>
-                    <a href="{{ config['NETBOX_URL'] }}/dcim/devices/{{ device.id }}/" target="_blank">
+                    <a href="{{ config['NETBOX_URL'] }}/dcim/devices/{{ device.id }}/" target="_blank" rel="noopener noreferrer">
                         <img src="/static/assets/ico/netbox_black.ico"
                              style="width:auto; height:1em;"/>
                     </a>
-                    <a href="{{ url_for('go_cacti', ip=device.ip) }}" target="_blank">
+                    <a href="{{ url_for('go_cacti', ip=device.ip) }}" target="_blank" rel="noopener noreferrer">
                         <img src="/static/assets/ico/cacti_black.ico"
                              style="width:auto; height:1em;"/>
                     </a>
-                    <a href="{{ url_for('go_zabbix', ip=device.ip) }}" target="_blank">
+                    <a href="{{ url_for('go_zabbix', ip=device.ip) }}" target="_blank" rel="noopener noreferrer">
                         <img src="/static/assets/ico/zabbix_black.ico"
                              style="width:auto; height:1em;"/>
                     </a>
