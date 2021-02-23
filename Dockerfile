@@ -1,4 +1,6 @@
-FROM python:3.7.9-slim-buster
+ARG PYTHON_VERSION=3.7.10
+
+FROM python:${PYTHON_VERSION}
 
 RUN apt-get update && \
     apt-get install -y libjson-perl libsnmp-info-perl libsmi2-common snmp nano apt-transport-https \
