@@ -3,8 +3,6 @@ import pynetbox
 
 def get_netbox_api(config):
     # TODO: Add exception handling
-    # Note: threading=True doesn't seem to work well with Python 3.8.2
-    # - Some of the devices might appear missing or duplicated.
     nb = pynetbox.api(
         config["NETBOX_URL"], token=config["NETBOX_TOKEN"], threading=True
     )

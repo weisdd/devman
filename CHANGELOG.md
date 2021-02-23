@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.19
+
+* Bumped python base image (to `3.7.10`) and dependencies.
+
 ## 0.1.18
 
 * Moved to python-decouple.

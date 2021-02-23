@@ -139,7 +139,7 @@ cython_debug/
 
 # IDE
 .idea
-#.vscode
+.vscode
 
 # Local environment
 temp/
