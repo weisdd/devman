@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.1.20
+
+* Moved to `3.7.10-slim`.
+
 ## 0.1.19
 
 * Bumped python base image (to `3.7.10`) and dependencies.

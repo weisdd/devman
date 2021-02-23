@@ -1,9 +1,9 @@
-ARG PYTHON_VERSION=3.7.10
+ARG PYTHON_VERSION=3.7.10-slim
 
 FROM python:${PYTHON_VERSION}
 
 RUN apt-get update && \
-    apt-get install -y libjson-perl libsnmp-info-perl libsmi2-common snmp nano apt-transport-https \
+    apt-get install --no-install-recommends -y libjson-perl libsnmp-info-perl libsmi2-common snmp nano apt-transport-https \
                        curl gnupg2 procps iproute2 && \
     curl -sL https://nginx.org/keys/nginx_signing.key | apt-key add - && \
     echo 'deb https://packages.nginx.org/unit/debian/ buster unit' > /etc/apt/sources.list.d/unit.list && \
