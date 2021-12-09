@@ -11,9 +11,10 @@ import helpers  # noqa
 
 def get_zabbix_url(config, ip):
     url = ""
+    error = {}
 
     if ext_devices.check_ip(ip):
-        hostid = ext_zabbix.get_hostid_by_ip(config, ip)
+        hostid, error = ext_zabbix.get_hostid_by_ip(config, ip)
         if hostid:
             url = (
                 f"{config['ZABBIX_URL']}/zabbix.php?action=latest.view"
@@ -24,7 +25,7 @@ def get_zabbix_url(config, ip):
             # if no matching device found in Zabbix
             url = config["ZABBIX_URL"]
 
-    return url
+    return url, error
 
 
 def get_cacti_url(config, ip):

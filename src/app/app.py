@@ -77,7 +77,11 @@ def go_cacti(ip):
 
 @app.route("/go/zabbix/<ip>")
 def go_zabbix(ip):
-    url = ext_go.get_zabbix_url(app.config, ip)
+    url, error = ext_go.get_zabbix_url(app.config, ip)
+    if error:
+        return render_template(
+            "go/error.html", title="{} - Go - Zabbix".format(ip), error=error
+        )
     if not url:
         abort(404)
     return redirect(url)
@@ -92,19 +96,24 @@ def healthz():
 
 @app.route("/scripts")
 def scripts():
-    items = ext_zabbix.dispatch_dict(names_only=True)
-    return render_template("scripts/index.html", title="Scripts", items=items)
+    items, error = ext_zabbix.dispatch_dict(names_only=True)
+    return render_template(
+        "scripts/index.html", title="Scripts", items=items, error=error
+    )
 
 
 @app.route("/scripts/<name>")
 def scripts_zabbix(name):
-    items = ext_zabbix.dispatch_dict(name=name, config=app.config)
+    items, error = ext_zabbix.dispatch_dict(name=name, config=app.config)
     title = name.replace("_", " ").title()
     # non-existent functions
     if not items:
         abort(404)
     return render_template(
-        "scripts/zabbix/universal.html", title=f"{title} - Scripts", items=items,
+        "scripts/zabbix/universal.html",
+        title=f"{title} - Scripts",
+        items=items,
+        error=error,
     )
 
 
