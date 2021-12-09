@@ -78,7 +78,8 @@ def get_cacti_url(config, ip):
         except pymysql.Error as e:
             error = helpers.wrap_exception(
                 e,
-                "Failed to retrieve data from MySQL. Please, check logs for more details.",
+                "Failed to retrieve data from MySQL. Please, check logs for more "
+                "details.",
             )
         finally:
             connection.close()
