@@ -1,5 +1,6 @@
 import os
 import sys
+
 from decouple import config as dconfig
 from flask import Flask, abort, redirect, render_template, url_for
 from natsort import natsorted
@@ -28,28 +29,25 @@ def index():
 
 @app.route("/devices")
 def devices():
+    devices_list, error = ext_netbox.netbox_get_devices(app.config)
     return render_template(
-        "devices/index.html",
-        title="Devices",
-        devices=ext_netbox.netbox_get_devices(app.config),
+        "devices/index.html", title="Devices", devices=devices_list, error=error
     )
 
 
 @app.route("/devices/site/<site>")
 def devices_site(site):
+    devices_list, error = ext_netbox.netbox_get_devices(app.config, site=site)
     return render_template(
-        "devices/index.html",
-        title="Devices",
-        devices=ext_netbox.netbox_get_devices(app.config, site=site),
+        "devices/index.html", title="Devices", devices=devices_list, error=error
     )
 
 
 @app.route("/devices/model/<model>")
 def devices_model(model):
+    devices_list, error = ext_netbox.netbox_get_devices(app.config, model=model)
     return render_template(
-        "devices/index.html",
-        title="Devices",
-        devices=ext_netbox.netbox_get_devices(app.config, model=model),
+        "devices/index.html", title="Devices", devices=devices_list, error=error
     )
 
 
@@ -67,7 +65,11 @@ def devices_ip(ip):
 
 @app.route("/go/cacti/<ip>")
 def go_cacti(ip):
-    url = ext_go.get_cacti_url(app.config, ip)
+    url, error = ext_go.get_cacti_url(app.config, ip)
+    if error:
+        return render_template(
+            "go/error.html", title="{} - Go - Cacti".format(ip), error=error
+        )
     if not url:
         abort(404)
     return redirect(url)

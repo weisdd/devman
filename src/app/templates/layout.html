@@ -55,6 +55,11 @@
         {% block heading %}
             <legend>{% block page %}{% endblock %}</legend>
         {% endblock %}
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error["message"] | default("Error message was not propagated. Please, check logs for more details.") }}
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
         <br>
 
