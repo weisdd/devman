@@ -116,15 +116,15 @@ async def devices_ip(request: Request, ip: str):
     # The empty result is fine
     if not ext_devices.check_ip(ip):
         raise HTTPException(status_code=404, detail="Page not found")
-    snmp_data = ext_devices.get_snmp_data(ip)
+    snmp_data, error = await ext_devices.get_snmp_data(ip)
 
     return templates.TemplateResponse(
         "devices/ip.html",
         {
             "request": request,
             "settings": settings,
+            "error": error,
             "title": "{} - Devices".format(ip),
-            # TODO: error?
             "snmp": snmp_data,
         },
     )

@@ -1,12 +1,21 @@
+import asyncio
 import json
 import os
 import subprocess
 from ipaddress import ip_address
+
 from decouple import config as dconfig
 
+import helpers
 
-def get_snmp_data(ip):
+
+class DevManSNMPError(Exception):
+    pass
+
+
+async def get_snmp_data(ip):
     snmp_data = {}
+    error = {}
     test_mode = dconfig("DEVMAN_TEST_MODE", default=False, cast=bool)
 
     if check_ip(ip):
@@ -18,17 +27,24 @@ def get_snmp_data(ip):
                 snmp_data = json.load(f)
         else:
             devman_path = f"{path}/devman.pl"
-            command_result = subprocess.run(
-                [devman_path, ip],
+            proc = await asyncio.create_subprocess_exec(
+                devman_path,
+                ip,
                 stdout=subprocess.PIPE,
-                stderr=subprocess.DEVNULL,
+                stderr=subprocess.PIPE,
                 stdin=subprocess.DEVNULL,
-                encoding="utf-8",
             )
-            if not command_result.returncode:
-                snmp_data = json.loads(command_result.stdout)
+            stdout, stderr = await proc.communicate()
+            if proc.returncode != 0:
+                error = helpers.wrap_exception(
+                    DevManSNMPError(stderr.decode()),
+                    "Failed to retrieve data via SNMP. Please, check logs for more details.",
+                )
+                return snmp_data, error
 
-    return snmp_data
+            snmp_data = json.loads(stdout.decode())
+
+    return snmp_data, error
 
 
 def check_ip(ip):
