@@ -9,37 +9,37 @@ import ext_zabbix  # noqa
 import helpers  # noqa
 
 
-def get_zabbix_url(config, ip):
+def get_zabbix_url(settings, ip):
     url = ""
     error = {}
 
     if ext_devices.check_ip(ip):
-        hostid, error = ext_zabbix.get_hostid_by_ip(config, ip)
+        hostid, error = ext_zabbix.get_hostid_by_ip(settings, ip)
         if hostid:
             url = (
-                f"{config['ZABBIX_URL']}/zabbix.php?action=latest.view"
+                f"{settings.zabbix_url}/zabbix.php?action=latest.view"
                 f"&filter_hostids[]={hostid}&filter_show_without_data=1"
                 "&filter_set=1"
             )
         else:
             # if no matching device found in Zabbix
-            url = config["ZABBIX_URL"]
+            url = settings.zabbix_url
 
     return url, error
 
 
-def get_cacti_url(config, ip):
+def get_cacti_url(settings, ip):
     url = ""
     error = {}
 
     if ext_devices.check_ip(ip):
         try:
             connection = pymysql.connect(
-                host=config["CACTI_MYSQL_HOST"],
-                unix_socket=config["CACTI_MYSQL_UNIX_SOCKET"],
-                user=config["CACTI_MYSQL_USER"],
-                password=config["CACTI_MYSQL_PASSWORD"],
-                db=config["CACTI_MYSQL_DB"],
+                host=settings.cacti_mysql_host,
+                unix_socket=settings.cacti_mysql_unix_socket,
+                user=settings.cacti_mysql_user,
+                password=settings.cacti_mysql_password,
+                db=settings.cacti_mysql_db,
                 charset="utf8mb4",
                 cursorclass=pymysql.cursors.DictCursor,
             )
@@ -61,7 +61,7 @@ def get_cacti_url(config, ip):
                     hostid = result_host["id"]
                     # Just in case there's a host not added to the tree
                     url = "{}/graph_view.php?action=preview&host_id={}".format(
-                        config["CACTI_URL"], hostid
+                        settings.cacti_url, hostid
                     )
 
                     sql = "SELECT `id` FROM `graph_tree_items` WHERE `host_id`=%s LIMIT 1"  # noqa
@@ -71,7 +71,7 @@ def get_cacti_url(config, ip):
                     if result_graph_tree_items:
                         tbranchid = result_graph_tree_items["id"]
                         url = (
-                            f"{config['CACTI_URL']}/graph_view.php?action=tree"
+                            f"{settings.cacti_url}/graph_view.php?action=tree"
                             f"&node=tbranch-{tbranchid}&host_id={hostid}"
                             "&site_id=-1&host_template_id=-1&hgd=&hyper=true"
                         )

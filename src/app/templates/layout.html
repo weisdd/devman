@@ -38,9 +38,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Links</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ config['CACTI_URL'] }}">Cacti</a>
-                            <a class="dropdown-item" href="{{ config['NETBOX_URL'] }}">Netbox</a>
-                            <a class="dropdown-item" href="{{ config['ZABBIX_URL'] }}">Zabbix</a>
+                            <a class="dropdown-item" href="{{ settings.cacti_url }}">Cacti</a>
+                            <a class="dropdown-item" href="{{ settings.netbox_url }}">Netbox</a>
+                            <a class="dropdown-item" href="{{ settings.zabbix_url }}">Zabbix</a>
                         </div>
                     </li>
                 </ul>
@@ -69,7 +69,7 @@
 <footer class="footer mt-auto py-3">
     <div class="container">
     <span class="text-muted">
-          &copy; weisdd, 2020{% if config['VERSION'] != '' %}, v{{ config['VERSION'] }}{% endif %}
+          &copy; weisdd, 2020{% if settings.version != '' %}, v{{ settings.version }}{% endif %}
     </span>
     </div>
 </footer>

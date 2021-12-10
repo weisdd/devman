@@ -12,7 +12,7 @@
     <ul>
       {% for item in items %}
         <li>
-          <a href="{{ url_for('scripts_zabbix', name=item) }}">{{ item | replace('_', ' ') | title }}</a>
+          <a href="{{ url_for('scripts_zabbix', script=item) }}">{{ item | replace('_', ' ') | title }}</a>
         </li>
       {% endfor%}
     </ul>

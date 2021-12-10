@@ -4,15 +4,13 @@ from requests.exceptions import RequestException
 import helpers  # noqa
 
 
-def get_netbox_api(config):
-    nb = pynetbox.api(
-        config["NETBOX_URL"], token=config["NETBOX_TOKEN"], threading=True
-    )
+def get_netbox_api(settings):
+    nb = pynetbox.api(settings.netbox_url, token=settings.netbox_token, threading=True)
     return nb
 
 
-def netbox_get_devices(config, **kwargs):
-    nb = get_netbox_api(config)
+def netbox_get_devices(settings, **kwargs):
+    nb = get_netbox_api(settings)
     error = {}
 
     # TODO: Filter name verification through **custom_filter

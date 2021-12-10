@@ -7,13 +7,13 @@ from requests.exceptions import RequestException
 import helpers
 
 
-def get_zapi(config):
-    zapi = ZabbixAPI(config["ZABBIX_URL"])
-    zapi.login(config["ZABBIX_USER"], config["ZABBIX_PASSWORD"])
+def get_zapi(settings):
+    zapi = ZabbixAPI(settings.zabbix_url)
+    zapi.login(settings.zabbix_user, settings.zabbix_password)
     return zapi
 
 
-def get_maps_forgotten_elements(config):
+def get_maps_forgotten_elements(settings):
     error = {}
     result = {
         "description": (
@@ -28,7 +28,7 @@ def get_maps_forgotten_elements(config):
     }
 
     try:
-        zapi = get_zapi(config)
+        zapi = get_zapi(settings)
 
         call = {"selectSelements": "extend", "sortfield": "name"}
 
@@ -69,7 +69,7 @@ def get_maps_forgotten_elements(config):
     return result, error
 
 
-def get_maps_missing_hosts(config):
+def get_maps_missing_hosts(settings):
     error = {}
     result = {
         "description": ("It helps to find hosts that haven't been added to any maps."),
@@ -80,7 +80,7 @@ def get_maps_missing_hosts(config):
     }
 
     try:
-        zapi = get_zapi(config)
+        zapi = get_zapi(settings)
 
         call = {
             "selectSelements": "extend",
@@ -131,12 +131,12 @@ def get_maps_missing_hosts(config):
     return result, error
 
 
-def get_hostid_by_ip(config, ip):
+def get_hostid_by_ip(settings, ip):
     error = {}
     hostid = 0
 
     try:
-        zapi = get_zapi(config)
+        zapi = get_zapi(settings)
         call = {"filter": {"ip": ip}, "limit": "1"}
 
         result = zapi.hostinterface.get(**call)
@@ -150,11 +150,11 @@ def get_hostid_by_ip(config, ip):
     return hostid, error
 
 
-def dispatch_dict(name="", config="", names_only=False):
+def dispatch_dict(name="", settings="", names_only=False):
     error = {}
     routes = {
-        "forgotten_elements": lambda: get_maps_forgotten_elements(config),
-        "missing_hosts": lambda: get_maps_missing_hosts(config),
+        "forgotten_elements": lambda: get_maps_forgotten_elements(settings),
+        "missing_hosts": lambda: get_maps_missing_hosts(settings),
     }
     if names_only:
         return sorted(routes.keys()), error
