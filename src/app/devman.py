@@ -2,15 +2,15 @@
 import os
 import sys
 
-from natsort import natsorted
-
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from natsort import natsorted
 from pydantic import BaseSettings
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 import ext_devices  # noqa
 import ext_go  # noqa
@@ -34,8 +34,6 @@ class Settings(BaseSettings):
     zabbix_password: str = "zabbix"
     # TODO: add setting with test json for devman.pl
 
-
-from fastapi.staticfiles import StaticFiles
 
 settings = Settings()
 app = FastAPI()

@@ -38,7 +38,8 @@ async def get_snmp_data(ip):
             if proc.returncode != 0:
                 error = helpers.wrap_exception(
                     DevManSNMPError(stderr.decode()),
-                    "Failed to retrieve data via SNMP. Please, check logs for more details.",
+                    "Failed to retrieve data via SNMP. Please, "
+                    "check logs for more details.",
                 )
                 return snmp_data, error
 

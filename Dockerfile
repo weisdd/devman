@@ -3,8 +3,18 @@ ARG PYTHON_VERSION=3.9.9-slim
 FROM python:${PYTHON_VERSION}
 
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y libjson-perl libsnmp-info-perl libsmi2-common snmp nano apt-transport-https \
-                       curl gnupg2 procps iproute2 && \
+    apt-get install --no-install-recommends -y \
+        libjson-perl \
+        libsnmp-info-perl \
+        libsmi2-common \
+        snmp \
+        nano \
+        apt-transport-https \
+        curl \
+        gnupg2 \
+        procps \
+        iproute2 \
+        && \
     curl -sL https://nginx.org/keys/nginx_signing.key | apt-key add - && \
     echo 'deb https://packages.nginx.org/unit/debian/ bullseye unit' > /etc/apt/sources.list.d/unit.list && \
     apt-get update && \
