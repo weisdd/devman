@@ -21,6 +21,12 @@ COPY ./requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip --no-cache-dir && \
     pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
+RUN umask 002 && \
+    mkdir -p /etc/snmp/ /app/snmp/ && \
+    echo > /app/snmp/snmp.conf && \
+    chmod g=u /app/snmp/snmp.conf && \
+    ln -sf /app/snmp/snmp.conf /etc/snmp/snmp.conf
+
 COPY ./app /app
 
 # TODO: add user (group root)

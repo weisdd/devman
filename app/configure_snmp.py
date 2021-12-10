@@ -7,7 +7,7 @@ from glob import glob
 def prepare_snmp_conf():
     base_path = os.path.abspath(os.path.dirname(__file__))
     mibs_path = f"{base_path}/mibs/*/"
-    snmp_conf_path = "/etc/snmp/snmp.conf"
+    snmp_conf_path = f"{base_path}/snmp/snmp.conf"
 
     with open(snmp_conf_path, "w", encoding="utf-8") as snmp_conf:
         print(f"Generating snmp.conf based on the content of {mibs_path}\n")
