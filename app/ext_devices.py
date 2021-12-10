@@ -4,8 +4,6 @@ import os
 import subprocess
 from ipaddress import ip_address
 
-from decouple import config as dconfig
-
 import helpers
 
 
@@ -13,14 +11,13 @@ class DevManSNMPError(Exception):
     pass
 
 
-async def get_snmp_data(ip):
+async def get_snmp_data(ip, settings):
     snmp_data = {}
     error = {}
-    test_mode = dconfig("DEVMAN_TEST_MODE", default=False, cast=bool)
 
     if check_ip(ip):
         path = os.path.abspath(os.path.dirname(__file__))
-        if test_mode:
+        if settings.mock_snmp:
             with open(
                 f"{path}/tests/ext_devices/test.json", "r", encoding="utf-8",
             ) as f:

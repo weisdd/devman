@@ -33,7 +33,6 @@ def netbox_get_devices(settings, **kwargs):
                     "id": device.id,
                 }
             )
-    # TODO: test authentication failures (might belong to another exception)
     except (RequestException, pynetbox.core.query.RequestError) as e:
         error = helpers.wrap_exception(
             e,

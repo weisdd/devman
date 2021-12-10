@@ -26,13 +26,13 @@ class Settings(BaseSettings):
     cacti_mysql_user: str = "root"
     cacti_mysql_password: str = ""
     cacti_url: str = "http://127.0.0.1:8002"
+    mock_snmp: bool = False
     netbox_url: str = "http://127.0.0.1:8001"
     netbox_token: str = "0123456789abcdef0123456789abcdef01234567"
     version: str = ""
     zabbix_url: str = "http://127.0.0.1:8081"
     zabbix_user: str = "Admin"
     zabbix_password: str = "zabbix"
-    # TODO: add setting with test json for devman.pl
 
 
 settings = Settings()
@@ -114,7 +114,7 @@ async def devices_ip(request: Request, ip: str):
     # The empty result is fine
     if not ext_devices.check_ip(ip):
         raise HTTPException(status_code=404, detail="Page not found")
-    snmp_data, error = await ext_devices.get_snmp_data(ip)
+    snmp_data, error = await ext_devices.get_snmp_data(ip, settings)
 
     return templates.TemplateResponse(
         "devices/ip.html",
@@ -205,4 +205,4 @@ async def scripts_zabbix(request: Request, script: str):
 
 
 if __name__ == "__main__":
-    uvicorn.run("devman:app")
+    uvicorn.run("main:app")

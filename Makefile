@@ -3,10 +3,10 @@ setup:
 
 install:
 	pip install --upgrade pip &&\
-		pip install -r src/app/requirements.txt
+		pip install -r requirements.txt
 
 lint:
-	flake8 --max-line-length=88 src/app
+	flake8 --max-line-length=88 app
 
 build:
 	docker build . -t quay.io/weisdd/devman:$(TAG)
