@@ -19,7 +19,6 @@ import ext_zabbix  # noqa
 
 
 class Settings(BaseSettings):
-    secret_key: str = "oNJ7QzZjwmenrBYh"
     cacti_mysql_host: str = "127.0.0.1"
     cacti_mysql_unix_socket: str = ""
     cacti_mysql_db: str = "cacti"
@@ -36,7 +35,7 @@ class Settings(BaseSettings):
 
 
 settings = Settings()
-app = FastAPI()
+app = FastAPI(openapi_url=None, docs_url=None, redoc_url=None)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 templates = Jinja2Templates(directory="templates")
