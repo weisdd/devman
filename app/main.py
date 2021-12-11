@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     cacti_mysql_user: str = "root"
     cacti_mysql_password: str = ""
     cacti_url: str = "http://127.0.0.1:8002"
+    debug: bool = False
     mock_snmp: bool = False
     netbox_url: str = "http://127.0.0.1:8001"
     netbox_token: str = "0123456789abcdef0123456789abcdef01234567"

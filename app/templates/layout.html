@@ -58,6 +58,9 @@
         {% if error %}
         <div class="alert alert-danger" role="alert">
             {{ error["message"] | default("Error message was not propagated. Please, check logs for more details.") }}
+            {% if settings.debug %}
+                <br /><br />Exception: {{ error["exception"]}}
+            {% endif %}
         </div>
         {% endif %}
         {% block content %}{% endblock %}
