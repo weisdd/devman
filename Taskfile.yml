@@ -1,0 +1,24 @@
+version: '3'
+
+env:
+  TAG: latest
+
+tasks:
+  default:
+    - task: lint
+  lint:
+    cmds:
+      - flake8 app/
+  build:
+    cmds:
+      - docker build . -t quay.io/weisdd/devman:$TAG
+  push:
+    cmds:
+      - docker build . -t quay.io/weisdd/devman:$TAG
+  setup:
+    cmds:
+      - python3 -m venv .venv
+      # TODO: venv is not activated
+      - source .venv/bin/activate
+      - pip install --upgrade pip
+      - pip install -r requirements.txt
