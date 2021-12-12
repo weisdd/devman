@@ -3,12 +3,14 @@
 ## 0.2.0
 
 - Added proper error handling for netbox, mysql, zabbix, devman.pl. It's also possible to print extended details while running in debug mode;
+- Changed snmp.conf path;
+- Deprecated Makefile;
 - Moved from Flask to FastAPI;
 - Moved from Nginx Unit to gunicorn;
-- Moved to async handlers;
 - Moved to async call for devman.pl (so it doesn't block the app now);
+- Moved to async handlers;
+- Moved to non-root user;
 - Moved to python 3.8;
-- Deprecated Makefile;
 - Updated all python depdendencies.
 
 ## 0.1.20
