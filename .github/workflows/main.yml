@@ -8,8 +8,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run flake8
+        run: flake8 app/
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to Docker registry
+        uses: docker/login-action@v1
         with:
-          python-version: '3.8'
-      - run: pip install flake8
-      - run: flake8 app/
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
+
+      - name: Choose tag
+        id: tag
+        shell: bash
+        run:
+          echo "::set-output name=TAG::${GITHUB_REF_NAME//\//-}"
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: quay.io/${{ secrets.QUAY_USERNAME }}/${{ github.repository }}:${{ steps.tag.outputs.TAG }}
