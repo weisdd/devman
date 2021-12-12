@@ -1,0 +1,7 @@
+flask==2.0.2
+natsort==8.0.0
+pymysql==1.0.2
+pynetbox==6.3.0
+pyzabbix==1.0.0
+fastapi>=0.70.0
+uvicorn>=0.16.0

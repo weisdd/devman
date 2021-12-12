@@ -1,16 +1,18 @@
 import pynetbox
+from requests.exceptions import RequestException
+
+import helpers
 
 
-def get_netbox_api(config):
-    # TODO: Add exception handling
-    nb = pynetbox.api(
-        config["NETBOX_URL"], token=config["NETBOX_TOKEN"], threading=True
-    )
+def get_netbox_api(settings):
+    nb = pynetbox.api(settings.netbox_url, token=settings.netbox_token, threading=True)
     return nb
 
 
-def netbox_get_devices(config, **kwargs):
-    nb = get_netbox_api(config)
+def netbox_get_devices(settings, **kwargs):
+    nb = get_netbox_api(settings)
+    error = {}
+
     # TODO: Filter name verification through **custom_filter
 
     try:
@@ -31,6 +33,9 @@ def netbox_get_devices(config, **kwargs):
                     "id": device.id,
                 }
             )
-    except pynetbox.core.query.RequestError as err:
-        print("Request error:", err)
-    return devices
+    except (RequestException, pynetbox.core.query.RequestError) as e:
+        error = helpers.wrap_exception(
+            e,
+            "Failed to retrieve data from netbox. Please, check logs for more details.",
+        )
+    return devices, error

@@ -1,0 +1,20 @@
+version: '3'
+
+env:
+  TAG: dev
+
+tasks:
+  default:
+    - task: lint
+  lint:
+    cmds:
+      - flake8 app/
+  build:
+    cmds:
+      - docker build . -t quay.io/weisdd/devman:$TAG
+  push:
+    cmds:
+      - docker push quay.io/weisdd/devman:$TAG
+  build-push:
+    - task: build
+    - task: push

@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 import os
+import sys
 from glob import glob
 
 
 def prepare_snmp_conf():
     base_path = os.path.abspath(os.path.dirname(__file__))
     mibs_path = f"{base_path}/mibs/*/"
-    snmp_conf_path = f"{base_path}/snmp.conf"
+    snmp_conf_path = f"{base_path}/snmp/snmp.conf"
 
     with open(snmp_conf_path, "w", encoding="utf-8") as snmp_conf:
         print(f"Generating snmp.conf based on the content of {mibs_path}\n")
@@ -18,8 +19,7 @@ def prepare_snmp_conf():
                 line = f"mibdirs {path}\n" if count == 1 else f"mibdirs +{path}\n"
                 snmp_conf.write(line)
         else:
-            print(f"Could not find any nested directories in {mibs_path}\n")
-            return 1
+            sys.exit(f"Could not find any nested directories in {mibs_path}\n")
 
 
 def main():

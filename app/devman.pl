@@ -13,7 +13,7 @@ sub main {
       "Invalid number of arguments. You should have passed just one IP address."
       if ( $#ARGV != 0 );
     my $ip = $ARGV[0];
-    die "Invalid IP address: $ip" if !( check_ip($ip) );
+    die "Invalid IP address: $ip" if !( valid_ip($ip) );
     my $json = get_snmp_info($ip);
     print("$json\n");
 }
@@ -123,7 +123,7 @@ sub get_snmp_info {
     return encode_json \%ports_info;
 }
 
-sub check_ip {
+sub valid_ip {
     my ($ip) = @_;
     return $ip =~ m/^[1-9][0-9]{0,2}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/;
 }

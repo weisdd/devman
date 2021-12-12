@@ -8,12 +8,4 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
-    <h5>Zabbix</h5>
-    <ul>
-      {% for item in items %}
-        <li>
-          <a href="{{ url_for('scripts_zabbix', name=item) }}">{{ item | replace('_', ' ') | title }}</a>
-        </li>
-      {% endfor%}
-    </ul>
 {% endblock %}

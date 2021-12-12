@@ -19,7 +19,7 @@
             integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"></script>
     <script src="/static/assets/js/bootstrap.bundle.js"></script>
     <script src="/static/assets/js/jquery.tablesorter-2.31.3.min.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="/static/assets/ico/favicon.png">
+    <link rel="icon" type="image/x-icon" href="/static/assets/ico/favicon.png">
 </head>
 <body class="d-flex flex-column h-100">
 <header>
@@ -38,9 +38,9 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Links</a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="{{ config['CACTI_URL'] }}">Cacti</a>
-                            <a class="dropdown-item" href="{{ config['NETBOX_URL'] }}">Netbox</a>
-                            <a class="dropdown-item" href="{{ config['ZABBIX_URL'] }}">Zabbix</a>
+                            <a class="dropdown-item" href="{{ settings.cacti_url }}">Cacti</a>
+                            <a class="dropdown-item" href="{{ settings.netbox_url }}">Netbox</a>
+                            <a class="dropdown-item" href="{{ settings.zabbix_url }}">Zabbix</a>
                         </div>
                     </li>
                 </ul>
@@ -55,6 +55,14 @@
         {% block heading %}
             <legend>{% block page %}{% endblock %}</legend>
         {% endblock %}
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error["message"] | default("Error message was not propagated. Please, check logs for more details.") }}
+            {% if settings.debug %}
+                <br /><br />Exception: {{ error["exception"]}}
+            {% endif %}
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
         <br>
 
@@ -64,7 +72,7 @@
 <footer class="footer mt-auto py-3">
     <div class="container">
     <span class="text-muted">
-          &copy; weisdd, 2020{% if config['VERSION'] != '' %}, v{{ config['VERSION'] }}{% endif %}
+          &copy; weisdd, 2020-2021{% if settings.version != '' %}, v{{ settings.version }}{% endif %}
     </span>
     </div>
 </footer>
