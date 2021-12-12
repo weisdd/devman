@@ -105,10 +105,11 @@ async def devices_model(request: Request, model: str):
 
 @app.get("/devices/snmp/{ip}")
 async def devices_ip(request: Request, ip: str):
-    # Needed to distinguish an empty result and an invalid IP:
-    # The empty result is fine
-    if not ext_devices.check_ip(ip):
-        raise HTTPException(status_code=404, detail="Page not found")
+    if not ext_devices.valid_ip(ip):
+        raise HTTPException(
+            status_code=400, detail="Only IPs from private IP range are accepted"
+        )
+
     snmp_data, error = await ext_devices.get_snmp_data(ip, settings)
 
     return templates.TemplateResponse(
@@ -125,6 +126,11 @@ async def devices_ip(request: Request, ip: str):
 
 @app.get("/go/cacti/{ip}", response_class=HTMLResponse)
 async def go_cacti(request: Request, ip: str):
+    if not ext_devices.valid_ip(ip):
+        raise HTTPException(
+            status_code=400, detail="Only IPs from private IP range are accepted"
+        )
+
     url, error = ext_go.get_cacti_url(settings, ip)
     if error:
         return templates.TemplateResponse(
@@ -136,15 +142,17 @@ async def go_cacti(request: Request, ip: str):
                 "title": "{} - Go - Cacti".format(ip),
             },
         )
-    # IP is outside of the allowed range or MySQL errors occur
-    if not url:
-        raise HTTPException(status_code=404, detail="Page not found")
 
     return RedirectResponse(url)
 
 
 @app.get("/go/zabbix/{ip}", response_class=HTMLResponse)
 async def go_zabbix(request: Request, ip: str):
+    if not ext_devices.valid_ip(ip):
+        raise HTTPException(
+            status_code=400, detail="Only IPs from private IP range are accepted"
+        )
+
     url, error = ext_go.get_zabbix_url(settings, ip)
     if error:
         return templates.TemplateResponse(
@@ -156,9 +164,6 @@ async def go_zabbix(request: Request, ip: str):
                 "title": "{} - Go - Zabbix".format(ip),
             },
         )
-    # IP is outside of the allowed range or can't retrieve data from zabbix
-    if not url:
-        raise HTTPException(status_code=404, detail="Page not found")
 
     return RedirectResponse(url)
 

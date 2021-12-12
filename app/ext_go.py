@@ -10,7 +10,7 @@ def get_zabbix_url(settings, ip):
     url = ""
     error = {}
 
-    if ext_devices.check_ip(ip):
+    if ext_devices.valid_ip(ip):
         try:
             zapi = ext_zabbix.get_zapi(settings)
             call = {"filter": {"ip": ip}, "limit": "1"}
@@ -41,7 +41,7 @@ def get_cacti_url(settings, ip):
     url = ""
     error = {}
 
-    if ext_devices.check_ip(ip):
+    if ext_devices.valid_ip(ip):
         try:
             connection = pymysql.connect(
                 host=settings.cacti_mysql_host,

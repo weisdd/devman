@@ -15,7 +15,7 @@ async def get_snmp_data(ip, settings):
     snmp_data = {}
     error = {}
 
-    if check_ip(ip):
+    if valid_ip(ip):
         path = os.path.abspath(os.path.dirname(__file__))
         if settings.mock_snmp:
             with open(
@@ -45,7 +45,7 @@ async def get_snmp_data(ip, settings):
     return snmp_data, error
 
 
-def check_ip(ip):
+def valid_ip(ip):
     try:
         return ip_address(ip).is_private
     except ValueError:
