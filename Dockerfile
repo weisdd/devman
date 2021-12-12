@@ -25,13 +25,13 @@ RUN umask 002 && \
     mkdir -p /etc/snmp/ /app/snmp/ && \
     echo > /app/snmp/snmp.conf && \
     chmod g=u /app/snmp/snmp.conf && \
-    ln -sf /app/snmp/snmp.conf /etc/snmp/snmp.conf
+    ln -sf /app/snmp/snmp.conf /etc/snmp/snmp.conf && \
+    adduser --system --uid 1000 --gid 0 app
 
 COPY ./app /app
 
-# TODO: add user (group root)
-# TODO: move these instructions?
+USER 1000
+
 ENV PORT=8000
-STOPSIGNAL SIGTERM
 EXPOSE 8000
 HEALTHCHECK CMD ["curl", "-f", "http://127.0.0.1:8000/healthz"]
