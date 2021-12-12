@@ -131,25 +131,6 @@ def get_maps_missing_hosts(settings):
     return result, error
 
 
-def get_hostid_by_ip(settings, ip):
-    error = {}
-    hostid = 0
-
-    try:
-        zapi = get_zapi(settings)
-        call = {"filter": {"ip": ip}, "limit": "1"}
-
-        result = zapi.hostinterface.get(**call)
-        hostid = result[0]["hostid"] if result else ""
-    except RequestException as e:
-        error = helpers.wrap_exception(
-            e,
-            "Failed to retrieve data from zabbix. Please, check logs for more details.",
-        )
-
-    return hostid, error
-
-
 def dispatch_dict(name="", settings="", names_only=False):
     error = {}
     routes = {

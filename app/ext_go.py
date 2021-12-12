@@ -1,12 +1,9 @@
-import os
-import sys
+import pymysql.cursors
+from requests.exceptions import RequestException
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-import pymysql.cursors  # noqa
-
-import ext_devices  # noqa
-import ext_zabbix  # noqa
-import helpers  # noqa
+import ext_devices
+import ext_zabbix
+import helpers
 
 
 def get_zabbix_url(settings, ip):
@@ -14,16 +11,28 @@ def get_zabbix_url(settings, ip):
     error = {}
 
     if ext_devices.check_ip(ip):
-        hostid, error = ext_zabbix.get_hostid_by_ip(settings, ip)
-        if hostid:
-            url = (
-                f"{settings.zabbix_url}/zabbix.php?action=latest.view"
-                f"&filter_hostids[]={hostid}&filter_show_without_data=1"
-                "&filter_set=1"
+        try:
+            zapi = ext_zabbix.get_zapi(settings)
+            call = {"filter": {"ip": ip}, "limit": "1"}
+
+            result = zapi.hostinterface.get(**call)
+            if result:
+                hostid = result[0]["hostid"]
+                url = (
+                    f"{settings.zabbix_url}/zabbix.php?action=latest.view"
+                    f"&filter_hostids[]={hostid}&filter_show_without_data=1"
+                    "&filter_set=1"
+                )
+            else:
+                # If an IP is correct and there's no error, then we should
+                # at least return base URL
+                url = settings.zabbix_url
+        except RequestException as e:
+            error = helpers.wrap_exception(
+                e,
+                "Failed to retrieve data from zabbix."
+                " Please, check logs for more details.",
             )
-        else:
-            # if no matching device found in Zabbix
-            url = settings.zabbix_url
 
     return url, error
 
@@ -75,6 +84,10 @@ def get_cacti_url(settings, ip):
                             f"&node=tbranch-{tbranchid}&host_id={hostid}"
                             "&site_id=-1&host_template_id=-1&hgd=&hyper=true"
                         )
+                else:
+                    # If an IP is correct and there's no error, then we should
+                    # at least return base URL
+                    url = settings.cacti_url
         except pymysql.Error as e:
             error = helpers.wrap_exception(
                 e,

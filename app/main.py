@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-import os
-import sys
-
 import uvicorn
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
@@ -10,12 +7,10 @@ from fastapi.templating import Jinja2Templates
 from natsort import natsorted
 from pydantic import BaseSettings
 
-sys.path.append(os.path.abspath(os.path.dirname(__file__)))
-
-import ext_devices  # noqa
-import ext_go  # noqa
-import ext_netbox  # noqa
-import ext_zabbix  # noqa
+import ext_devices
+import ext_go
+import ext_netbox
+import ext_zabbix
 
 
 class Settings(BaseSettings):
@@ -141,7 +136,7 @@ async def go_cacti(request: Request, ip: str):
                 "title": "{} - Go - Cacti".format(ip),
             },
         )
-    # IP is outside of the allowed range
+    # IP is outside of the allowed range or MySQL errors occur
     if not url:
         raise HTTPException(status_code=404, detail="Page not found")
 
@@ -161,7 +156,7 @@ async def go_zabbix(request: Request, ip: str):
                 "title": "{} - Go - Zabbix".format(ip),
             },
         )
-    # IP is outside of the allowed range
+    # IP is outside of the allowed range or can't retrieve data from zabbix
     if not url:
         raise HTTPException(status_code=404, detail="Page not found")
 

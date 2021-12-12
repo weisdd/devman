@@ -1,7 +1,7 @@
 import pynetbox
 from requests.exceptions import RequestException
 
-import helpers  # noqa
+import helpers
 
 
 def get_netbox_api(settings):
